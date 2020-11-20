@@ -20,7 +20,7 @@ public class CollectionController : MonoBehaviour
     {
     	if(collision.tag == "Player")
     	{
-            PlayerMovement.collectedAmount+=1;
+            PlayerMovement.collectedAmount+=10;
     		Destroy(gameObject);
     	}
     }

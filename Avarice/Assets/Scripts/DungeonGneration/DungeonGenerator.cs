@@ -5,10 +5,13 @@ using UnityEngine;
 public class DungeonGenerator : MonoBehaviour
 {
     public DungeonGenerationData dungeonGenerationData;
-    private List<Vector2Int> dungeonRooms;
+    private List<Vector2Int> dungeonRooms = new List<Vector2Int>();
 
     private void Start()
     {
+        System.Random randomNumber = new System.Random(GetInstanceID());
+
+        Debug.Log("Called");
     	dungeonRooms = DungeonCrawlerController.GenerateDungeon(dungeonGenerationData);
     	SpawnRoom(dungeonRooms);
     }
@@ -27,7 +30,7 @@ public class DungeonGenerator : MonoBehaviour
             }
             else
             {
-    		    RoomController.instance.LoadRoom("Empty", roomLocation.x, roomLocation.y);
+    		    RoomController.instance.LoadRoom(RoomController.instance.GetRandomRoomName(), roomLocation.x, roomLocation.y);
             }
     	}
     }

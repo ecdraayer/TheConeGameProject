@@ -17,4 +17,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DungeonRooms/BasementStart.unity
     guid: 6798238b47e09478a9c8a7bdbf42e398
+  - enabled: 1
+    path: Assets/Scenes/DungeonRooms/BasementChase.unity
+    guid: ff8bce542422845c2844bfbcaf761294
+  - enabled: 1
+    path: Assets/Scenes/DungeonRooms/PowerUps.unity
+    guid: cd0959b4fa7a347489bd1858f5c433e5
+  - enabled: 1
+    path: Assets/Scenes/DungeonRooms/GameOver.unity
+    guid: f5c813b75266a47be90ca556d7bd7da5
   m_configObjects: {}

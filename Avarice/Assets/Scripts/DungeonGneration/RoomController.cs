@@ -30,10 +30,10 @@ public class RoomController : MonoBehaviour
 	public bool spawnedBossRoom = false;
 	bool updatedRooms = false;
 
-	void Awake()
+	/*void Awake()
 	{
-		instance = this;
-	}
+		
+	}*/
 
 	void Start()
 	{
@@ -42,7 +42,7 @@ public class RoomController : MonoBehaviour
 		//LoadRoom("Empty",-1,0);
 		//LoadRoom("Empty",0,1);
 		//LoadRoom("Empty",0,-1);
-
+		instance = this;
 
 	}
 
@@ -70,6 +70,7 @@ public class RoomController : MonoBehaviour
 					room.RemoveUnconnectedDoors();
 				}
 				updatedRooms = true;
+				UpdateRooms();
 			}
 			return;
 		}
@@ -115,6 +116,8 @@ public class RoomController : MonoBehaviour
 
 		AsyncOperation loadRoom = SceneManager.LoadSceneAsync(roomName, LoadSceneMode.Additive);
 
+		UpdateRooms();
+
 		while(loadRoom.isDone == false)
 		{
 			yield return null;
@@ -136,6 +139,7 @@ public class RoomController : MonoBehaviour
 			room.transform.parent = transform;
 
 			isLoadingRoom = false;
+			room.playerEntered = false;
 
 			if(loadedRooms.Count == 0)
 			{
@@ -161,11 +165,100 @@ public class RoomController : MonoBehaviour
     }
 
 
+    public string GetRandomRoomName()
+    {
+    	string[] possibleRooms = new string[] {
+    		"Empty",
+    		"Chase",
+    	};
 
+    	return possibleRooms[Random.Range(0, possibleRooms.Length)];
+    }
     public void OnPlayerEnterRoom(Room room)
     {
+    		
+    	if(room.playerEntered == true)
+	    {
+	    	if(room.portal != null)
+	    	{
+	    		room.portal.SetActive(false);
+	    	}
+	    }
+	    if(room.playerEntered == true)
+	    {
+	    	Debug.Log("Set to True");
+	    } 
+	    else
+	    {
+	    	Debug.Log("Set to False");
+	    }
     	CameraController.instance.currRoom = room;
     	currRoom =  room;
+    	StartCoroutine(RoomCoroutine());
+    	currRoom.playerEntered = true;
+    }
+
+    public IEnumerator RoomCoroutine()
+    {
+    	yield return new WaitForSeconds(0.2f);
+    	UpdateRooms();
+    }
+
+    public void UpdateRooms()
+    {
+    	foreach(Room room in loadedRooms)
+    	{
+    		if(currRoom != room)
+    		{
+
+    			EnemyController[] enemies = room.GetComponentsInChildren<EnemyController>();
+    			if(enemies != null)
+    			{
+    				foreach(EnemyController enemy in enemies)
+    				{
+    					enemy.notInRoom = true;
+    					//Debug.Log("Enemy not in room!");
+    				}
+
+    				foreach(Door door in room.GetComponentsInChildren<Door>())
+    				{
+    					door.doorCollider.SetActive(false);
+    				}
+    			}
+    			else
+    			{
+    				foreach(Door door in room.GetComponentsInChildren<Door>())
+    				{
+    					door.doorCollider.SetActive(false);
+    				}
+    			}
+    		}
+    		else
+    		{
+    			EnemyController[] enemies = room.GetComponentsInChildren<EnemyController>();
+    			if(enemies.Length > 0)
+    			{
+    				foreach(EnemyController enemy in enemies)
+    				{
+    					enemy.notInRoom = false;
+    					//Debug.Log("Enemy in room!");
+    				}
+    				foreach(Door door in room.GetComponentsInChildren<Door>())
+    				{
+    					door.doorCollider.SetActive(true);
+    				}
+    			}
+    			else
+    			{
+    				foreach(Door door in room.GetComponentsInChildren<Door>())
+    				{
+    					door.doorCollider.SetActive(false);
+    				}
+    			}
+    		}
+    		
+
+    	}
     }
     
 }

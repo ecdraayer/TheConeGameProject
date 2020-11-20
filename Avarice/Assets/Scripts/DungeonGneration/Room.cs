@@ -9,7 +9,9 @@ public class Room : MonoBehaviour
 	public int Height;
 	public int X;
 	public int Y;
+    public GameObject portal;
     private bool updatedDoors = false;
+    public bool playerEntered = false;
 
     public Room(int x, int y)
     {
@@ -21,6 +23,7 @@ public class Room : MonoBehaviour
     public Door rightDoor;
     public Door topDoor;
     public Door bottomDoor;
+
 
     public List<Door> doors = new List<Door>();
 
@@ -74,20 +77,33 @@ public class Room : MonoBehaviour
             {
                 case Door.DoorType.right:
                     if(GetRight() == null)
+                    {
+                        door.doorCollider.SetActive(true);
                         door.gameObject.SetActive(false);
-                break;
+                        
+                    }
+                    break;
                 case Door.DoorType.left:
                     if(GetLeft() == null)
+                    {
+                        door.doorCollider.SetActive(true);
                         door.gameObject.SetActive(false);
-                break;
+                    }
+                    break;
                 case Door.DoorType.top:
                     if(GetTop() == null)
+                    {
+                            door.doorCollider.SetActive(true);
                             door.gameObject.SetActive(false);
-                break;
+                    }
+                    break;
                 case Door.DoorType.bottom:
                     if(GetBottom() == null)
+                    {
+                        door.doorCollider.SetActive(true);
                         door.gameObject.SetActive(false);
-                 break;
+                    }
+                    break;
             }
             
         }

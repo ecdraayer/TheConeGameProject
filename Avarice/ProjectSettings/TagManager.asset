@@ -7,6 +7,7 @@ TagManager:
   - SpawnPoint
   - Rooms
   - Enemy
+  - Portal
   layers:
   - Default
   - TransparentFX
@@ -47,11 +48,14 @@ TagManager:
   - name: Behind
     uniqueID: 478623837
     locked: 0
-  - name: Player
-    uniqueID: 138619713
-    locked: 0
   - name: Door
     uniqueID: 2449901831
+    locked: 0
+  - name: Wall
+    uniqueID: 3989408051
+    locked: 0
+  - name: Player
+    uniqueID: 138619713
     locked: 0
   - name: UI
     uniqueID: 3930608619
