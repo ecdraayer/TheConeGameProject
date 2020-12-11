@@ -24,6 +24,7 @@ public class DungeonCrawlerController : MonoBehaviour
 
     public static List<Vector2Int> GenerateDungeon(DungeonGenerationData dungeonData)
     {
+        positionVisited = new List<Vector2Int>();
         List<DungeonCrawler> dungeonCrawlers = new List<DungeonCrawler>();
 
         for(int i=0; i < dungeonData.numberOfCrawlers; i++)
@@ -32,7 +33,7 @@ public class DungeonCrawlerController : MonoBehaviour
         }
 
         int iterations = Random.Range(dungeonData.iterationMin, dungeonData.iterationMax);
-
+        //Debug.Log(iterations);
         for(int i=0; i<iterations; i++)
         {
             foreach(DungeonCrawler dungeonCrawler in dungeonCrawlers)

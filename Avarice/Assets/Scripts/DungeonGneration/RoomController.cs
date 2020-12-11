@@ -14,6 +14,10 @@ public class RoomInfo
 
 public class RoomController : MonoBehaviour
 {
+	public GameObject player;
+    public GameObject game;
+    public GameObject canvas;
+
 	public static RoomController instance;
 
 	string currentWorldName = "Basement";
@@ -30,10 +34,11 @@ public class RoomController : MonoBehaviour
 	public bool spawnedBossRoom = false;
 	bool updatedRooms = false;
 
-	/*void Awake()
+	void Awake()
 	{
-		
-	}*/
+		instance = null;
+		instance = this;
+	}
 
 	void Start()
 	{
@@ -42,7 +47,7 @@ public class RoomController : MonoBehaviour
 		//LoadRoom("Empty",-1,0);
 		//LoadRoom("Empty",0,1);
 		//LoadRoom("Empty",0,-1);
-		instance = this;
+		
 
 	}
 
@@ -72,6 +77,9 @@ public class RoomController : MonoBehaviour
 				updatedRooms = true;
 				UpdateRooms();
 			}
+			player.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        	game.SetActive(true);
+        	canvas.SetActive(true);
 			return;
 		}
 		currentLoadRoomData = loadRoomQueue.Dequeue();
@@ -122,6 +130,7 @@ public class RoomController : MonoBehaviour
 		{
 			yield return null;
 		}
+		
 	}
 
 	public void RegisterRoom( Room room )
@@ -170,6 +179,7 @@ public class RoomController : MonoBehaviour
     	string[] possibleRooms = new string[] {
     		"Empty",
     		"Chase",
+    		"Treasure",
     	};
 
     	return possibleRooms[Random.Range(0, possibleRooms.Length)];
@@ -194,13 +204,14 @@ public class RoomController : MonoBehaviour
 	    }
     	CameraController.instance.currRoom = room;
     	currRoom =  room;
+
     	StartCoroutine(RoomCoroutine());
     	currRoom.playerEntered = true;
     }
 
     public IEnumerator RoomCoroutine()
     {
-    	yield return new WaitForSeconds(0.2f);
+    	yield return new WaitForSeconds(1.2f);
     	UpdateRooms();
     }
 

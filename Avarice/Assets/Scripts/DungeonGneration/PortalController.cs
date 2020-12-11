@@ -18,6 +18,7 @@ public class PortalController : MonoBehaviour
     	
     	if(other.CompareTag("Player") && !other.isTrigger)
     	{
+            GameController.Level += 1;
 
 	    	SceneManager.LoadScene("PowerUps");
     	}

@@ -6,14 +6,23 @@ public class DungeonGenerator : MonoBehaviour
 {
     public DungeonGenerationData dungeonGenerationData;
     private List<Vector2Int> dungeonRooms = new List<Vector2Int>();
+    private int chance;
+    
+    //private static bool canDo = false;
+
+    //public static bool CanDo{get => canDo; set => canDo=value;}
 
     private void Start()
     {
-        System.Random randomNumber = new System.Random(GetInstanceID());
-
-        Debug.Log("Called");
+        //player.SetActive(false);
+        //game.SetActive(false);
+        //Random.seed = System.DateTime.Now.Millisecond;
+        //Debug.Log("Called");
     	dungeonRooms = DungeonCrawlerController.GenerateDungeon(dungeonGenerationData);
+        
     	SpawnRoom(dungeonRooms);
+
+
     }
 
     private void SpawnRoom(IEnumerable<Vector2Int> rooms)
@@ -30,8 +39,26 @@ public class DungeonGenerator : MonoBehaviour
             }
             else
             {
-    		    RoomController.instance.LoadRoom(RoomController.instance.GetRandomRoomName(), roomLocation.x, roomLocation.y);
+                if(GameController.Level >= 10 && roomCounter > 10){
+                    chance = Random.Range(0,100);
+                    if(chance >= 95){
+                        RoomController.instance.LoadRoom("Boss", roomLocation.x, roomLocation.y);
+                    }
+                    else
+                    {
+                        RoomController.instance.LoadRoom(RoomController.instance.GetRandomRoomName(), roomLocation.x, roomLocation.y);
+                    }
+                }
+                else
+                {
+                    RoomController.instance.LoadRoom(RoomController.instance.GetRandomRoomName(), roomLocation.x, roomLocation.y);
+                }
+    		    
             }
     	}
+
+        
+       
+
     }
 }

@@ -27,11 +27,14 @@ public class EnemyController : MonoBehaviour
     private bool coolDownAttack = false;
     public float coolDown;
     public bool notInRoom = false;
+    public int attackingDamage;
+    public AudioSource attackSound;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        health = health + GameController.Level*2;
 
     }
 
@@ -111,7 +114,9 @@ public class EnemyController : MonoBehaviour
     {
         if(!coolDownAttack)
         {
-            GameController.DamagePlayer(1);
+            attackSound.Play();
+            int damageBoost = (int)Mathf.Floor(GameController.Level/2)+1;
+            GameController.DamagePlayer(damageBoost*attackingDamage);
             StartCoroutine(CoolDown());
         }
     }

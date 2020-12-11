@@ -31,10 +31,19 @@ public class PowerUpMenuController : MonoBehaviour
 
     public void PowerUp2 ()
     {
-    	if (PlayerMovement.collectedAmount >= 25)
+    	if (PlayerMovement.collectedAmount >= 25 && GameController.Health < GameController.MaxHealth)
     	{
 	    	PlayerMovement.collectedAmount -= 25;
-	    	GameController.Health += 10;
+            if (GameController.Health + 10 > GameController.MaxHealth)
+            {
+                GameController.Health = GameController.MaxHealth;
+            } 
+            else
+            {
+                GameController.Health += 20;
+            }
+
+	    	
 	    }
     }
 
@@ -43,7 +52,7 @@ public class PowerUpMenuController : MonoBehaviour
     	if (PlayerMovement.collectedAmount >= 75)
     	{
 	    	PlayerMovement.collectedAmount -= 75;
-            GameController.PlayerDamage += 0.5f;
+            GameController.PlayerDamage += 1.0f;
 	    }
     }
 
